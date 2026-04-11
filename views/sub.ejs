@@ -19,6 +19,14 @@
       </div>
       <div>
         <p>Implement this page yourself. It is from sub.ejs</p>
+        <ul><ul>
+  <% subpost.forEach(post => { %>
+    <li>
+      <a href="<%= post.link %>"><%= post.title %></a>
+      <p>By: <%= post.creator.uname %></p>
+    </li>
+  <% }) %>
+</ul>
       </div>
     </main>
   </body>

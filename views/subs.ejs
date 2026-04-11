@@ -15,10 +15,16 @@
     <main>
       <div class="authOptions">
         <h1>Sub Groups</h1>
+ 
         <a role="button" href="/posts">Home</a>
       </div>
       <div>
         <p>Implement this page yourself. It is from subs.ejs</p>
+               <ul>
+  <% subs.forEach(sub => { %>
+    <li><a href="/subs/show/<%= sub %>"><%= sub %></a></li>
+  <% }) %>
+</ul>
       </div>
     </main>
   </body>
