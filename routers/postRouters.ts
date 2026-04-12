@@ -73,11 +73,12 @@ router.get("/deleteconfirm/:postid", ensureAuthenticated, async (req, res) => {
 
 router.post("/delete/:postid", ensureAuthenticated, async (req, res) => {
   // ⭐ TODO
-
-  postid = req.params.postid;
-
+  const uer = await req.user
+  const postid = req.params.postid;
+  const post = getPost(postid)
+  const subgroup = post.subgroup;
   deletePost(postid);
-  res.redirect();
+  res.redirect(`/show/${subgroup}`);
   
 });
 
