@@ -68,7 +68,7 @@ router.get("/deleteconfirm/:postid", ensureAuthenticated, async (req, res) => {
   const postid = req.params.postid;
 
   const poststuff = getPost(postid);
-  res.render("indi")
+  res.render("delete", {post: poststuff})
 });
 
 router.post("/delete/:postid", ensureAuthenticated, async (req, res) => {
