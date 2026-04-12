@@ -22,7 +22,7 @@
           <div class="individualPost">
       <div class="individualPost">
   <h3><%= post.title %></h3>
-   <p>Link: <a href="<%= post.link %>"> </a><%= post.link %> </p>
+     <p>Link: <a href="<%= post.link %>"><%= post.link %></a></p>
   <p>Description:<%= post.description %></p>
   <p>Date Created: <%= new Date(post.timestamp).toDateString() %> </p>
   <p> Created by: <%= post.creator.uname %></p>
@@ -31,7 +31,7 @@
      <form action="/edit/<%= post.id %>" method="POST">
       <button>Edit</button>
     </form>
-    <form action="/delete/<%= post.id %>" method="POST">
+    <form action="/posts/delete/<%= post.id %>" method="POST">
       
       <button type="submit" onclick="return confirm('Are you sure you want to delete?')">DELETE</button>
     </form>

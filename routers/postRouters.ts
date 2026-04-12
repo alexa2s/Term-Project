@@ -45,7 +45,7 @@ router.get("/show/:postid", async (req, res) => {
   const poststuff = getPost(postid);
   const user = await req.user;
 
-  res.render("individualPost", { post: poststuff, user: user });
+  res.render("individualPost", { post: poststuff, user: user, postid:postid });
 });
 
 router.get("/edit/:postid", ensureAuthenticated, async (req, res) => {
@@ -75,10 +75,11 @@ router.post("/delete/:postid", ensureAuthenticated, async (req, res) => {
   // ⭐ TODO
   const uer = await req.user
   const postid = req.params.postid;
+  console.log(postid)
   const post = getPost(postid)
   const subgroup = post.subgroup;
   deletePost(postid);
-  res.redirect(`/show/${subgroup}`);
+  res.redirect(`/subs/show/${subgroup}`);
   
 });
 
