@@ -11,12 +11,14 @@
     <link href="/css/style.css" rel="stylesheet" />
     <title>Delete Post</title>
   </head>
-
+<main>
+    <h1>Delete: <%= post.title %></h1>
 <body>
 <form action="/posts/delete/<%= post.id %>" method="POST" >
     <button type="submit" >Confirm Delete </button></form>
-    <a href="/posts/show/<%= post.id %>">"<button type="submit">Cancel </button>
+    <a href="/posts/show/<%= post.id %>"><button type="submit">Cancel </button>
         </a>
 
 </body>
+</main>
 </html>

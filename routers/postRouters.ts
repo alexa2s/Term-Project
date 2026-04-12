@@ -45,7 +45,7 @@ router.get("/show/:postid", async (req, res) => {
   const poststuff = getPost(postid);
   const user = await req.user;
 
-  res.render("individualPost", { post: poststuff, user: user, postid:postid });
+  res.render("individualPost", { post: poststuff, user: user, postid: postid });
 });
 
 router.get("/edit/:postid", ensureAuthenticated, async (req, res) => {
@@ -53,6 +53,14 @@ router.get("/edit/:postid", ensureAuthenticated, async (req, res) => {
   const user = await req.user;
   const postid = req.params.postid;
   const poststuff = getPost(postid);
+  const changes = {
+    title : req.body.title,
+    link : req.body.link,
+    description: req.body.description,
+    subgroup : req.body.subgroup
+  }
+  editPost(postid,changes)
+  res.render("edit",{post: poststuff})
 });
 
 router.post("/edit/:postid", ensureAuthenticated, async (req, res) => {
@@ -68,19 +76,18 @@ router.get("/deleteconfirm/:postid", ensureAuthenticated, async (req, res) => {
   const postid = req.params.postid;
 
   const poststuff = getPost(postid);
-  res.render("delete", {post: poststuff})
+  res.render("delete", { post: poststuff });
 });
 
 router.post("/delete/:postid", ensureAuthenticated, async (req, res) => {
   // ⭐ TODO
-  const uer = await req.user
+  const uer = await req.user;
   const postid = req.params.postid;
-  console.log(postid)
-  const post = getPost(postid)
+  console.log(postid);
+  const post = getPost(postid);
   const subgroup = post.subgroup;
   deletePost(postid);
   res.redirect(`/subs/show/${subgroup}`);
-  
 });
 
 router.post(
