@@ -18,10 +18,10 @@
         
     <div> 
         
-      <form action="/posts/create" method="POST">
-     <label>Title:</label> 
-     <input value= "<%= post.title %>" name="title" type="text" required>
-     <label>Link:</label>
+      <form action="/posts/edit/<%= post.id %>" type="text" method="POST">
+     <label>Title:</label>
+       <input value= "<%= post.title %>" name="title" type="text">
+        <label>Link:</label>
        <input value= "<%= post.link %>" name="link" type="text">
        <label>Description</label>
         <input  value="<%=post.description %>" name="description" type="text">

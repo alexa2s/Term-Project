@@ -53,19 +53,26 @@ router.get("/edit/:postid", ensureAuthenticated, async (req, res) => {
   const user = await req.user;
   const postid = req.params.postid;
   const poststuff = getPost(postid);
-  const changes = {
+  // const changes = {
+  //   title : req.body.title,
+  //   link : req.body.link,
+  //   description: req.body.description,
+  //   subgroup : req.body.subgroup
+  // }
+  // editPost(postid,changes)
+  res.render("edit",{post: poststuff, postid:postid})
+});
+
+router.post("/edit/:postid", ensureAuthenticated, async (req, res) => {
+  // ⭐ TODO
+  const postid = req.params.postid;
+   const changes = {
     title : req.body.title,
     link : req.body.link,
     description: req.body.description,
     subgroup : req.body.subgroup
   }
   editPost(postid,changes)
-  res.render("edit",{post: poststuff})
-});
-
-router.post("/edit/:postid", ensureAuthenticated, async (req, res) => {
-  // ⭐ TODO
-  postid = req.params.postid;
 
   res.redirect(`/posts/show/${postid}`);
 });
