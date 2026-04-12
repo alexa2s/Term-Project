@@ -37,11 +37,17 @@
       </div>
 
       <div>
-        <a role="button" href="/posts/create">Create Post</a>
+        
+        <% if (user) { %>
+  <a role="button" href="/posts/create">Create Post</a>
+<% } else { %>
+ 
+<% } %>
+      
       </div>
       <p style="color: rgb(197, 172, 172)">
         😦 Heads up...you probably want to hide the Create Post button above for
-        non-logged-in users!
+        non-logged-in users! 
       </p>
     </main>
   </body>

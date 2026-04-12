@@ -23,7 +23,8 @@
   <% subpost.forEach(post => { %>
     <li>
       <a href="<%= post.link %>"><%= post.title %></a>
-      <p>By: <%= post.creator.uname %></p>
+      <p>Written By: <%= post.creator.uname %></p>
+      
     </li>
   <% }) %>
 </ul>

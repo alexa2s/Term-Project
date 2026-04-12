@@ -15,6 +15,16 @@
     <main>
       <div class="authOptions">
         <h1>Create Post</h1>
+    <div>   
+      <form action="/posts/create" method="POST">
+      <input placeholder="title" name="title" type="text" required>
+       <input placeholder="link" name="link" type="text">
+        <input placeholder="description" name="description" type="text">
+         <input placeholder="subgroup" name="subgroup" type="text">
+      <button >Create</button>
+
+    </form></div>
+      
         <a role="button" href="/posts">Home</a>
       </div>
       <p>Implement this yourself. It comes from createPost.ejs</p>
