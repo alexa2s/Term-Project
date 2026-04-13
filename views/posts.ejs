@@ -28,6 +28,7 @@
         <div class="individualPost">
           <a href="/posts/show/<%=post.id%>"><%= post.title %></a>
           <p><%= post.description %></p>
+          <p>Written by: <%= post.creator.uname %></p>
           <p>Score: <%= post.voteTotal %></p>
 
           <% if (user) { %>

@@ -14,8 +14,10 @@ import {
   getUserVoteForPost
 } from "../fake-db";
 router.get("/", async (req, res) => {
-  const posts = await database.getPosts(20);
+  const preposts = await database.getPosts(20);
+  const posts = preposts.map(post => decoratePost(post));
   const user = await req.user;
+
   res.render("posts", { posts, user });
 });
 

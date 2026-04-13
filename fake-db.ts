@@ -108,7 +108,7 @@
       allPosts = allPosts.filter((post) => post.subgroup === sub);
     }
     allPosts.sort((a, b) => b.timestamp - a.timestamp);
-    return allPosts.slice(0, n).map(decoratePost);
+    return allPosts.slice(0, n)
   }
 
   function getPost(id) {
