@@ -10,6 +10,8 @@ import {
   decoratePost,
   editPost,
   deletePost,
+  setVote,
+  getUserVoteForPost
 } from "../fake-db";
 router.get("/", async (req, res) => {
   const posts = await database.getPosts(20);
@@ -45,7 +47,13 @@ router.get("/show/:postid", async (req, res) => {
   const poststuff = getPost(postid);
   const user = await req.user;
 
-  res.render("individualPost", { post: poststuff, user: user, postid: postid });
+  let userVote = 0
+
+  if (user) {
+    userVote = getUserVoteForPost(postid, user.id);
+  }
+
+  res.render("individualPost", { post: poststuff, user: user, postid: postid, userVote: userVote });
 });
 
 router.get("/edit/:postid", ensureAuthenticated, async (req, res) => {
@@ -88,13 +96,29 @@ router.get("/deleteconfirm/:postid", ensureAuthenticated, async (req, res) => {
 
 router.post("/delete/:postid", ensureAuthenticated, async (req, res) => {
   // ⭐ TODO
-  const uer = await req.user;
+  const user = await req.user;
   const postid = req.params.postid;
   console.log(postid);
   const post = getPost(postid);
   const subgroup = post.subgroup;
   deletePost(postid);
   res.redirect(`/subs/show/${subgroup}`);
+});
+
+router.post("/vote/:postid", ensureAuthenticated, async (req, res) => {
+  const postid = req.params.postid;
+  const user = await req.user;
+  const setvoteto = Number(req.body.setvoteto);
+  const returnto = req.body.returnto
+
+  if (setvoteto !== 1 && setvoteto !== -1 && setvoteto !== 0) {
+    return res.status(400).send("Invalid vote value");
+  }
+
+  setVote(postid, user.id, setvoteto);
+
+  res.redirect(returnto);
+
 });
 
 router.post(

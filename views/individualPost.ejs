@@ -19,13 +19,22 @@
       </div>
       <div>
         <p>
-          <div class="individualPost">
       <div class="individualPost">
   <h3><%= post.title %></h3>
      <p>Link: <a href="<%= post.link %>"><%= post.link %></a></p>
   <p>Description:<%= post.description %></p>
   <p>Date Created: <%= new Date(post.timestamp).toDateString() %> </p>
   <p> Created by: <%= post.creator.uname %></p>
+
+  <p>Score: <%= post.voteTotal %></p>
+
+  <% if (user) { %>
+          <form action="/posts/vote/<%= post.id %>" method="POST">
+            <input type="hidden" name ="returnto" value="/posts/show/<%= post.id %>">
+            <button type="submit" name="setvoteto" value="1">+</button>
+            <button type="submit" name="setvoteto" value="-1">-</button>
+          </form>
+          <% } %>
 <div>
   <% if (user && post.creator && user.id === post.creator.id) { %>
      <form action="/posts/edit/<%= post.id %>" method="GET">

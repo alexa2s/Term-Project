@@ -90,6 +90,7 @@
       ...post,
       creator: users[post.creator],
       votes: getVotesForPost(post.id),
+      voteTotal: getVoteTotal(post.id),
       comments: Object.values(comments)
         .filter((comment) => comment.post_id === post.id)
         .map((comment) => ({ ...comment, creator: users[comment.creator] })),
@@ -107,7 +108,7 @@
       allPosts = allPosts.filter((post) => post.subgroup === sub);
     }
     allPosts.sort((a, b) => b.timestamp - a.timestamp);
-    return allPosts.slice(0, n);
+    return allPosts.slice(0, n).map(decoratePost);
   }
 
   function getPost(id) {
@@ -166,6 +167,56 @@
     return comment;
   }
 
+  function getVoteTotal(post_id) {
+    let sum = 0;
+
+    for (let vote of votes) {
+      if (vote.post_id === Number(post_id)) {
+        sum += vote.value;
+      }
+    }
+    return sum
+  }
+
+  function getUserVoteForPost(post_id,user_id) {
+    for (let vote of votes) {
+      if (vote.post_id === Number(post_id) && vote.user_id === Number(user_id)) {
+        return vote.value;
+      }
+    }
+    return 0;
+  }
+
+  function setVote(post_id, user_id, value) {
+    post_id = Number(post_id);
+    user_id = Number(user_id);
+    value = Number(value);
+
+    let existVote = null;
+
+    for(let vote of votes) {
+      if (vote.post_id === post_id && vote.user_id === user_id) {
+        existVote = vote;
+        break;
+      }
+    }
+
+    if(existVote) {
+      if(existVote.value === value) {
+        existVote.value = 0;
+      } else {
+        existVote.value = value
+      }
+    } else {
+      votes.push({
+        post_id,
+        user_id,
+        value,
+    });
+    }
+
+  }
+
   export {
     debug,
     getUser,
@@ -178,4 +229,7 @@
     getSubs,
     addComment,
     decoratePost,
+    getVoteTotal,
+    getUserVoteForPost,
+    setVote
   };
