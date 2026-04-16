@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -55,3 +56,107 @@
     </main>
   </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css"
+    />
+    <link href="/css/style.css" rel="stylesheet" />
+    <title><%= post.title %></title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/posts"><strong>MyReddit</strong></a>
+        <a href="/subs/list">Subgroups</a>
+        <% if (user) { %>
+          <a href="/posts/create">Create Post</a>
+          <a href="/auth/logout">Logout (<%= user.uname %>)</a>
+        <% } else { %>
+          <a href="/auth/login">Login</a>
+        <% } %>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Post Details -->
+      <article class="post-detail">
+        <h2><%= post.title %></h2>
+        <% if (post.link) { %>
+          <p><a href="<%= post.link %>" target="_blank"><%= post.link %></a></p>
+        <% } %>
+        <% if (post.description) { %>
+          <p><%= post.description %></p>
+        <% } %>
+        <p>
+          Posted by <strong><%= post.creator.uname %></strong>
+          in <a href="/subs/show/<%= post.subgroup %>"><%= post.subgroup %></a>
+          &mdash; <%= new Date(post.timestamp).toDateString() %>
+        </p>
+
+        <!-- Edit / Delete — only for the post owner -->
+        <% if (user && post.creator && user.id === post.creator.id) { %>
+          <div class="post-actions">
+            <a href="/posts/edit/<%= post.id %>" role="button">Edit</a>
+            <a href="/posts/deleteconfirm/<%= post.id %>" role="button" class="delete-btn">Delete</a>
+          </div>
+        <% } %>
+      </article>
+
+      <hr />
+
+      <!-- Comments Section -->
+      <section class="comments-section">
+        <h3>Comments (<%= post.comments.length %>)</h3>
+
+        <% if (post.comments.length === 0) { %>
+          <p>No comments yet. Be the first!</p>
+        <% } else { %>
+          <% post.comments.sort((a, b) => b.timestamp - a.timestamp).forEach(comment => { %>
+            <div class="comment">
+              <p><%= comment.description %></p>
+              <small>
+                By <strong><%= comment.creator.uname %></strong>
+                &mdash; <%= new Date(comment.timestamp).toDateString() %>
+              </small>
+
+               <% if (user && user.id === comment.creator.id) { %>
+                <div class="comment-actions" style="margin-top: 10px;">
+                  <a href="/comments/edit/<%= comment.id %>" role="button" class="outline">Edit</a>
+                  
+                  <a href="/comments/deleteconfirm/<%= comment.id %>" role="button" class="outline" style="color: red; border-color: red;">Delete</a>
+                </div>
+              <% } %>
+
+            </div>
+          <% }) %>
+        <% } %>
+
+        <!-- Comment Form — only for logged-in users -->
+        <% if (user) { %>
+          <div class="comment-form">
+            <h4>Leave a Comment</h4>
+            <form action="/comments/comment-create/<%= post.id %>" method="POST">
+              <textarea
+                name="description"
+                placeholder="Write your comment here..."
+                rows="4"
+                required
+              ></textarea>
+              <button type="submit">Submit Comment</button>
+            </form>
+          </div>
+        <% } else { %>
+          <p><a href="/auth/login">Log in</a> to leave a comment.</p>
+        <% } %>
+      </section>
+    </main>
+  </body>
+</html>
+>>>>>>> d239d24 (added a type file, added a commentsroute.ts file and made the comment function work)

@@ -1,6 +1,7 @@
 import express from "express";
 import session from "express-session";
 import passport from "./middleware/passport";
+import commentsRoute from "./routers/commentsRoute";
 const PORT = process.env.PORT || 8000;
 
 const app = express();
@@ -35,6 +36,7 @@ app.use("/auth", authRoute);
 app.use("/posts", postsRoute);
 app.use("/subs", subsRouters);
 app.use("/", indexRoute);
+app.use("/comments", commentsRoute);
 
 app.listen(PORT, () =>
   console.log(`server should be running at http://localhost:${PORT}/`)
