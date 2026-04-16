@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css"
+    />
+    <link href="/css/style.css" rel="stylesheet" />
+    <title>Delete Post</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/posts"><strong>MyReddit</strong></a>
+        <a href="/subs/list">Subgroups</a>
+        <% if (user) { %>
+          <a href="/posts/create">Create Post</a>
+          <a href="/auth/logout">Logout (<%= user.uname %>)</a>
+        <% } else { %>
+          <a href="/auth/login">Login</a>
+        <% } %>
+      </nav>
+    </header>
+
+    <main>
+      <article>
+        <h2>Delete Post</h2>
+        <p>Are you sure you want to delete the following post? This cannot be undone.</p>
+
+        <div class="post-detail">
+          <h3><%= post.title %></h3>
+          <% if (post.link) { %>
+            <p><a href="<%= post.link %>" target="_blank"><%= post.link %></a></p>
+          <% } %>
+          <% if (post.description) { %>
+            <p><%= post.description %></p>
+          <% } %>
+          <p>
+            Posted by <strong><%= post.creator.uname %></strong>
+            in <strong><%= post.subgroup %></strong>
+            &mdash; <%= new Date(post.timestamp).toDateString() %>
+          </p>
+        </div>
+
+        <div class="post-actions">
+          <!-- Confirm: POST to delete -->
+          <form action="/posts/delete/<%= post.id %>" method="POST" style="display:inline;">
+            <button type="submit" class="delete-btn">Yes, Delete</button>
+          </form>
+
+          <!-- Cancel: go back to the post -->
+          <a href="/posts/show/<%= post.id %>" role="button">Cancel</a>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>

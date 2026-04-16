@@ -91,7 +91,7 @@
       creator: users[post.creator],
       votes: getVotesForPost(post.id),
       comments: Object.values(comments)
-        .filter((comment) => comment.post_id === post.id)
+        .filter((comment) => comment.post_id === post.id && users[comment.creator])
         .map((comment) => ({ ...comment, creator: users[comment.creator] })),
     };
     return post;
@@ -101,7 +101,7 @@
    * @param {*} n how many posts to get, defaults to 5
    * @param {*} sub which sub to fetch, defaults to all subs
    */
-  function getPosts(n = 5, sub = undefined) {
+  function getPosts(n: number = 5, sub: string | undefined = undefined) {
     let allPosts = Object.values(posts);
     if (sub) {
       allPosts = allPosts.filter((post) => post.subgroup === sub);
@@ -165,6 +165,20 @@
     comments[id] = comment;
     return comment;
   }
+  function deleteComment(comment_id) {
+    delete comments[comment_id]
+  }
+
+  function getComment(id) {
+  return comments[id]
+  }
+
+  function editComment(comment_id: any, description: string) {
+  let comment = comments[comment_id];
+  if (comment) {
+    comment.description = description;
+  }
+}
 
   export {
     debug,
@@ -178,4 +192,10 @@
     getSubs,
     addComment,
     decoratePost,
+    deleteComment,
+    getComment,
+    editComment
   };
+
+ 
+

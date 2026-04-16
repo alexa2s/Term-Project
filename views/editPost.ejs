@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css"
+    />
+    <link href="/css/style.css" rel="stylesheet" />
+    <title>Edit Post</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/posts"><strong>MyReddit</strong></a>
+        <a href="/subs/list">Subgroups</a>
+        <% if (user) { %>
+          <a href="/posts/create">Create Post</a>
+          <a href="/auth/logout">Logout (<%= user.uname %>)</a>
+        <% } else { %>
+          <a href="/auth/login">Login</a>
+        <% } %>
+      </nav>
+    </header>
+
+    <main>
+      <h2>Edit Post</h2>
+
+      <form action="/posts/edit/<%= post.id %>" method="POST">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value="<%= post.title %>"
+          required
+        />
+
+        <label for="link">Link</label>
+        <input
+          type="text"
+          id="link"
+          name="link"
+          value="<%= post.link %>"
+          placeholder="https://..."
+        />
+
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="4"
+          placeholder="Add some context..."
+        ><%= post.description %></textarea>
+
+        <label for="subgroup">Subgroup</label>
+        <input
+          type="text"
+          id="subgroup"
+          name="subgroup"
+          value="<%= post.subgroup %>"
+          required
+        />
+
+        <div class="post-actions">
+          <button type="submit">Save Changes</button>
+          <a href="/posts/show/<%= post.id %>" role="button">Cancel</a>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>
