@@ -11,7 +11,8 @@ import {
   editPost,
   deletePost,
   setVote,
-  getUserVoteForPost
+  getUserVoteForPost,
+  getCommentVoteTotal
 } from "../fake-db";
 router.get("/", async (req, res) => {
   const preposts = await database.getPosts(20);
@@ -55,7 +56,7 @@ router.get("/show/:postid", async (req, res) => {
     userVote = getUserVoteForPost(postid, user.id);
   }
 
-  res.render("individualPost", { post: poststuff, user: user, postid: postid, userVote: userVote });
+  res.render("individualPost", { post: poststuff, user: user, postid: postid, userVote: userVote, getCommentVoteTotal });
 });
 
 router.get("/edit/:postid", ensureAuthenticated, async (req, res) => {

@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { ensureAuthenticated } from "../middleware/checkAuth";
-import { getComment, deleteComment, addComment, editComment } from "../fake-db"; 
+import { getComment, deleteComment, addComment, editComment, setCommentVote } from "../fake-db"; 
 
 const router = express.Router();
 
@@ -76,6 +76,15 @@ router.post("/edit/:commentid", ensureAuthenticated, async (req: Request, res: R
 
   editComment(commentid, description.trim());
   res.redirect(`/posts/show/${comment.post_id}`);
+});
+
+// voting on comments
+
+router.post("/vote", ensureAuthenticated, async (req: Request, res: Response) => {
+  const userId = getUserId(req.user);
+  const {comment_id, setvoteto} = req.body;
+  setCommentVote(comment_id,userId,setvoteto);
+  res.redirect("back")
 });
 
 export default router;

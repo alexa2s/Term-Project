@@ -62,6 +62,8 @@
     { user_id: 3, post_id: 102, value: -1 },
   ];
 
+  const commentvotes = []
+
   function debug() {
     console.log("==== DB DEBUGING ====");
     console.log("users", users);
@@ -231,6 +233,56 @@
 
   }
 
+   function getCommentVoteTotal(comment_id) {
+    let sum = 0;
+
+    for (let vote of commentvotes) {
+      if (vote.comment_id === Number(comment_id)) {
+        sum += vote.value;
+      }
+    }
+    return sum
+  }
+
+  function getUserVoteForComment(comment_id,user_id) {
+    for (let vote of commentvotes) {
+      if (vote.comment_id === Number(comment_id) && vote.user_id === Number(user_id)) {
+        return vote.value;
+      }
+    }
+    return 0;
+  }
+
+  function setCommentVote(comment_id, user_id, value) {
+    comment_id = Number(comment_id);
+    user_id = Number(user_id);
+    value = Number(value);
+
+    let existVote = null;
+
+    for(let vote of commentvotes) {
+      if (vote.comment_id === comment_id && vote.user_id === user_id) {
+        existVote = vote;
+        break;
+      }
+    }
+
+    if(existVote) {
+      if(existVote.value === value) {
+        existVote.value = 0;
+      } else {
+        existVote.value = value
+      }
+    } else {
+      commentvotes.push({
+        comment_id,
+        user_id,
+        value,
+    });
+    }
+
+  } 
+
   export {
     debug,
     getUser,
@@ -250,7 +302,12 @@
 
     deleteComment,
     getComment,
-    editComment
+    editComment,
+
+    getCommentVoteTotal,
+    getUserVoteForComment,
+    setCommentVote,
+
 };
 
  
