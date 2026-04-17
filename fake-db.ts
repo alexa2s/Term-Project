@@ -243,16 +243,15 @@
     getSubs,
     addComment,
     decoratePost,
-<<<<<<< HEAD
+ 
     getVoteTotal,
     getUserVoteForPost,
-    setVote
-=======
+    setVote,
+
     deleteComment,
     getComment,
     editComment
->>>>>>> d239d24 (added a type file, added a commentsroute.ts file and made the comment function work)
-  };
+};
 
  
 
