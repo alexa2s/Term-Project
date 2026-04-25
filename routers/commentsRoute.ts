@@ -81,9 +81,15 @@ router.post("/edit/:commentid", ensureAuthenticated, async (req: Request, res: R
 // voting on comments
 
 router.post("/vote", ensureAuthenticated, async (req: Request, res: Response) => {
-  const userId = getUserId(req.user);
-  const {comment_id, setvoteto} = req.body;
-  setCommentVote(comment_id,userId,setvoteto);
+  const user = await req.user;
+  const comment_id = Number(req.body.comment_id);
+  const setvoteto = Number(req.body.setvoteto);
+
+  if (setvoteto !== 1 && setvoteto !== -1 && setvoteto !== 0) {
+    return res.status(400).send("Invalid vote value");
+  }
+
+  setCommentVote(comment_id, user.id, setvoteto);
   res.redirect("back")
 });
 

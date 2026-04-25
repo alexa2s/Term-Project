@@ -32,7 +32,7 @@
           <p>Score: <%= post.voteTotal %></p>
 
           <% if (user) { %>
-          <form action="/posts/vote/<%= post.id %>" method="POST">
+          <form class="buttonnice" action="/posts/vote/<%= post.id %>" method="POST">
             <input type="hidden" name ="returnto" value="/posts">
             <button type="submit" name="setvoteto" value="1">+</button>
             <button type="submit" name="setvoteto" value="-1">-</button>

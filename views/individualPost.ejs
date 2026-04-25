@@ -43,7 +43,7 @@
          <p>Score: <%= post.voteTotal %></p>
 
   <% if (user) { %>
-          <form action="/posts/vote/<%= post.id %>" method="POST">
+          <form class="buttonnice" action="/posts/vote/<%= post.id %>" method="POST">
             <input type="hidden" name ="returnto" value="/posts/show/<%= post.id %>">
             <button type="submit" name="setvoteto" value="1">+</button>
             <button type="submit" name="setvoteto" value="-1">-</button>
@@ -75,7 +75,7 @@
               <p>Score: <%= getCommentVoteTotal(comment.id) %></p>
 
               <% if (user) { %>
-              <form action="/comments/vote" method="POST">
+              <form class="buttonnice" action="/comments/vote" method="POST">
               <input type="hidden" name ="comment_id" value="<%= comment.id %>">
               <button type="submit" name="setvoteto" value="1">+</button>
               <button type="submit" name="setvoteto" value="-1">-</button>
