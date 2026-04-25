@@ -1,3 +1,8 @@
+Anthony A01167401
+Alex A01490994
+Ben A01462899
+
+
 # Term Assignment
 
 ## Introduction
